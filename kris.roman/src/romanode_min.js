@@ -1,0 +1,1 @@
+module.exports={convert:function(a){if(5E3<=a||0>=a)return"0<n<5000";var d={1E3:"M",900:"CM",500:"D",400:"CD",100:"C",90:"XC",50:"L",40:"XL",10:"X",9:"IX",5:"V",4:"IV",1:"I"},b="";Object.keys(d).reverse().forEach(function(c){for(;a>=c;)b+=d[c],a-=c});return b}};

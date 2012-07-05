@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+var romanode = require('./src/romanode');
+if(process.argv.length <= 2) {
+  console.log('Usage: romanode number');
+} else {
+  var numberToConvert = parseInt(process.argv[2]);
+  if (isNaN(numberToConvert)) {
+    console.log('Not a number: ' + process.argv[2]);
+    console.log('Usage: romanode number');
+  } else {
+    console.log(romanode.convert(numberToConvert));
+  }
+}
