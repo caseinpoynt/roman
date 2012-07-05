@@ -1,0 +1,113 @@
+Me again. By now you've all had time to gold farm The Butcher for your 10K DPS Vanquishing Centurion Spear of the Heavens so without further ado, let's get into this month's challenge.
+
+If Diablo sequels continue at this pace, the 9th installment will come out somewhere around the year 2042. We can assume it will be called Diablo IX. I had to do some fancy thinking to figure out this contrived example, so I'd like you to help me out.
+
+Create a program that converts a decimal number into the equivalent roman numeral representation.
+
+Yes, it's simple, but be creative and impress everyone with fanciness. The entries will be scored by votes only; it's not a head to head competition.
+
+As before, use any approach you want to solve the problem, the specs have been purposely left vague on this one, just include instructions if it's not obvious. If you have a choice I'd prefer if you passed the input number as an argument and have the program return the result on stdout.
+
+Submit your program by July 3rd.
+
+Here's an example program:
+$ ./rocky 5
+V
+$ ./rocky 2
+II
+$ ./rocky 7
+VII
+
+----------------------------------
+Hola Amigos!
+
+Another month, another challenge. 
+
+Our three intrepid heros this time are:
+- Joseph aka Grizzled Veteran aka Marcus Aurelias
+- Kris aka Boss Man aka Augustus Caesar
+- Phillip aka The Usurper aka the Visigoth Invader
+
+We'll start with Phillip the destroyer:
+To bring about the fall of the empire you cannot count on just one strategy, you need multiple strategies! You need so many strategies that your strategies have strategies.
+
+The core of this program is a standard subtract from the input value until you reach 0. How much to subtract and what gets printed out is determined by the strategy in play.
+Starting from M moving down through CM, D, CD, C.. etc the current value produces a strategy that determines the string representation of the number of repeated numerals and the amount to subtract from the current value.
+
+For instance, if you pass 8, the V strategy is chosen, it produces a computed value of 5 and a numeral value of "V", subtracts 5 from 8 and then picks a new strategy for the value 3.
+The only remaining strategy is the I strat which knows that it can handle the value 3 times so it gives a computed value of 3 and a numeral value of "III".
+ 
+A clever little piece that caught my was this method that produces a string of chars with the name of the numeral with a length of factor. No wimpy loops for Phillip!
+private String repeat(long factor) {
+  return new String(new char[(int) factor]).replace("\0", this.name());
+} 
+
+Next up is Kris Caesar:
+The emperor does not accept mistakes. Mistakes are for the gladiators in the colosseum. The son of Romulus, chosen by Jupiter, himself can broker no fault. 
+After Nero let Rome burn, Kris is determined to do things right, does he accomplish his goal or is he paralyzed as he tests his every move?
+
+The name of the program, romanode or "roman ode", brings to mind poetry and Shakespeare, and perhaps the thought that there's a missing N in the name since he wrote it for node.js
+
+Like Phillip, Kris uses a standard subtract until zero algorithm. Some error checking and then he leverages the fact that Javascript keeps a stable hash key ordering so that he can confidently iterate over the values of his value to numeral map in a consistent manner. Is it a guarantee of the language or an implementation detail? 
+ 
+    convert: function(decimal) {
+
+        if(decimal >= 5000 || decimal <= 0) return '0<n<5000';
+
+        var map= { 1000: 'M', 900: 'CM', 500: 'D', 400: 'CD', 
+                   100: 'C', 90: 'XC', 50: 'L', 40: 'XL', 
+                   10: 'X', 9: 'IX',  5: 'V', 4: 'IV', 1: 'I' };
+
+        var output = '';
+
+        Object.keys(map).reverse().forEach(function(key) { 
+                while (decimal >= key) {
+                    output += map[key];
+                    decimal -= key;
+                }
+        });
+        return output;
+    }
+
+The neat part of the submission is his use of jessie to bring rspec like tests to javascript. Here's an example of a couple tests:
+it('should convert 4999 into MMMMCMXCIX', function() {
+            expect(romanode.convert(4999)).toEqual('MMMMCMXCIX');
+})
+
+it('should complain about large numbers', function() {
+            expect(romanode.convert(5000)).toEqual('0<n<5000');
+})
+
+Last but not least General Joseph Chang:
+Bullyed by his previous assay into Gaul, Joseph has gone small and quick, knowing the barbarians would see a phalanx approaching from miles away. Taking a language that scholars believed to be old and antiquated he disproves them all with by far the most terse and concise submission of them all.
+
+His entire submission in only 12 lines, perl eat your heart out:
+
+public class RomanNumerals {
+  static String[] LETTERS = new String[] {
+    "IIIIIIIVVVIVIIVIIIIX", "XXXXXXXLLLXLXXLXXXXC",
+    "CCCCCCCDDDCDCCDCCCCM", "MMMMMM" };
+  static int[] OFFSETS = new int[] { 0, 0, 1, 3, 6, 8, 9, 11, 14, 18, 20 };
+  public static void main(String[] args) {
+    for(int i = 0; i < args[0].length(); i++) {
+      int digit = args[0].charAt(i) - '0';
+      System.out.print(LETTERS[args[0].length()-i-1].substring(OFFSETS[digit], OFFSETS[digit+1]));
+    }
+  }
+}           
+
+I'll leave it as an exercise to the reader to decode this genius. It's a really cool and novel approach to the problem.
+
+
+So that's it, yay June Programming Challenge! See you next month?
+
+Case
+
+From: Case Nelson
+Sent: Monday, June 04, 2012 11:05 PM
+To: dev.analytics; dev.backend; dev.frontend; quality.assurance; Operations
+Subject: June Programming Challenge: Roman Numerals
+
+Hi all,
+
+
